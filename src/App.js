@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
+import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import { createWorker } from 'tesseract.js';
 import './App.css';
 
+
 function App() {
+  const [ocr, setOcr] = useState('Recognizing...');
+  const [inpFile, setInpFile] = useState(undefined);
+  const [prog, setProgress] = useState(0);
+
+
   const worker = createWorker({
-    logger: m => console.log(m),
+    logger: m => setProgress(Math.floor(m['progress']*100)),
   });
+
   const doOCR = async (inpFile) => {
     await worker.load();
     await worker.loadLanguage('eng');
@@ -13,18 +23,20 @@ function App() {
     const { data: { text } } = await worker.recognize(inpFile);
     setOcr(text);
   };
-  const [ocr, setOcr] = useState('Recognizing...');
+
 
   const processFile = (event) => {
+    setProgress(0);
     doOCR(event.target.files[0]);
   };
 
-  const [inpFile, setInpFile] = useState(undefined);
+
   return (
     <div className="App">
       <form>
       <input type="file" value={inpFile} onChange={processFile} />
       </form>
+      <p>{prog}</p>
       <p>{ocr}</p>
     </div>
   );
