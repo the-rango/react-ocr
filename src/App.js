@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import { createWorker } from 'tesseract.js';
 import './App.css';
 
 
 function App() {
   const [ocr, setOcr] = useState('Recognizing...');
-  const [inpFile, setInpFile] = useState(undefined);
   const [prog, setProgress] = useState(0);
 
 
@@ -34,7 +30,7 @@ function App() {
   return (
     <div className="App">
       <form>
-      <input type="file" value={inpFile} onChange={processFile} />
+      <input type="file" onChange={processFile} />
       </form>
       <p>{prog}</p>
       <p>{ocr}</p>

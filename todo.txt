@@ -1,0 +1,7 @@
+1. scan wings tickets 
+2. isolate the ticket itself
+3. isolate the name section
+4. combine images into a pdf
+5. upload to google drive
+6. open pdf as google doc
+7. process data 
